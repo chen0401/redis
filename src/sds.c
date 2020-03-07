@@ -40,7 +40,9 @@
 #include "sdsalloc.h"
 
 const char *SDS_NOINIT = "SDS_NOINIT";
-
+/**
+ * 计算sds头部大小
+ **/ 
 static inline int sdsHdrSize(char type) {
     switch(type&SDS_TYPE_MASK) {
         case SDS_TYPE_5:
@@ -56,16 +58,20 @@ static inline int sdsHdrSize(char type) {
     }
     return 0;
 }
-
+/**
+ * 根据sds大小计算sds类型
+ * */
 static inline char sdsReqType(size_t string_size) {
     if (string_size < 1<<5)
         return SDS_TYPE_5;
-    if (string_size < 1<<8)
+    if (string_size < 1<<8) // 256Bit
         return SDS_TYPE_8;
-    if (string_size < 1<<16)
+    if (string_size < 1<<16)// 1M
         return SDS_TYPE_16;
-#if (LONG_MAX == LLONG_MAX)
-    if (string_size < 1ll<<32)
+// 64位系统中,long和long long都占8字节；32位系统中,long占4字节,long long占8字节
+// 如果LONG和LLONG相等则是64位系统
+#if (LONG_MAX == LLONG_MAX) 
+    if (string_size < 1ll<<32) //
         return SDS_TYPE_32;
     return SDS_TYPE_64;
 #else
@@ -89,21 +95,24 @@ static inline char sdsReqType(size_t string_size) {
 sds sdsnewlen(const void *init, size_t initlen) {
     void *sh;
     sds s;
+    // 根据初始长度计算sds类型
     char type = sdsReqType(initlen);
     /* Empty strings are usually created in order to append. Use type 8
      * since type 5 is not good at this. */
     if (type == SDS_TYPE_5 && initlen == 0) type = SDS_TYPE_8;
+    // sds header大小
     int hdrlen = sdsHdrSize(type);
     unsigned char *fp; /* flags pointer. */
-
+    // 开辟空间 sds header大小 + 初始化字符串的大小 + 1
     sh = s_malloc(hdrlen+initlen+1);
     if (init==SDS_NOINIT)
         init = NULL;
     else if (!init)
-        memset(sh, 0, hdrlen+initlen+1);
-    if (sh == NULL) return NULL;
-    s = (char*)sh+hdrlen;
-    fp = ((unsigned char*)s)-1;
+        memset(sh, 0, hdrlen+initlen+1); // 初始化为0
+    if (sh == NULL) return NULL;  // 开辟内存空间失败，返回NULL
+    s = (char*)sh+hdrlen;  // s右移header大小后,指向sds的起始位置
+    fp = ((unsigned char*)s)-1; // fp指向header中type的位置,记录sds的类型
+    // 根据sds类型初始化header部分
     switch(type) {
         case SDS_TYPE_5: {
             *fp = type | (initlen << SDS_TYPE_BITS);
@@ -138,9 +147,10 @@ sds sdsnewlen(const void *init, size_t initlen) {
             break;
         }
     }
+    // 将inti复制到sds部分
     if (initlen && init)
         memcpy(s, init, initlen);
-    s[initlen] = '\0';
+    s[initlen] = '\0'; // 以\0结束
     return s;
 }
 
@@ -203,22 +213,27 @@ void sdsclear(sds s) {
  * by sdslen(), but only the free buffer space we have. */
 sds sdsMakeRoomFor(sds s, size_t addlen) {
     void *sh, *newsh;
+    // sds可用空间
     size_t avail = sdsavail(s);
     size_t len, newlen;
     char type, oldtype = s[-1] & SDS_TYPE_MASK;
     int hdrlen;
 
     /* Return ASAP if there is enough space left. */
+    // 如果可用空间足够,则直接返回
     if (avail >= addlen) return s;
-
+    // sds的长度
     len = sdslen(s);
     sh = (char*)s-sdsHdrSize(oldtype);
+    // sds新长度
     newlen = (len+addlen);
+    // sds新长度小于1M,容量进行翻倍扩容
     if (newlen < SDS_MAX_PREALLOC)
         newlen *= 2;
     else
+    // sds新长度大于10M,容量每次增加1M
         newlen += SDS_MAX_PREALLOC;
-
+    // sds新类型
     type = sdsReqType(newlen);
 
     /* Don't use type 5: the user is appending to the string and type 5 is
@@ -227,21 +242,32 @@ sds sdsMakeRoomFor(sds s, size_t addlen) {
     if (type == SDS_TYPE_5) type = SDS_TYPE_8;
 
     hdrlen = sdsHdrSize(type);
+    // 如果类型没有改变,则只需要将内存扩容，不需要移动sds部分的数据
     if (oldtype==type) {
+        // 内存扩容  
+        //          |--header--|--sds--|
+        //          |--header--|--sds-----|  
         newsh = s_realloc(sh, hdrlen+newlen+1);
         if (newsh == NULL) return NULL;
+        // s指向sds
         s = (char*)newsh+hdrlen;
     } else {
         /* Since the header size changes, need to move the string forward,
          * and can't use realloc */
+        // 如果类型改变了，则header的大小就会改变，此时sds部分的数据就需要移动。
         newsh = s_malloc(hdrlen+newlen+1);
         if (newsh == NULL) return NULL;
+        // 从旧内存复制sds数据到新内存空间
         memcpy((char*)newsh+hdrlen, s, len+1);
+        // 释放原来的内存空间 header+sds
         s_free(sh);
         s = (char*)newsh+hdrlen;
+        // 记录新的类型
         s[-1] = type;
+        // 记录sds长度
         sdssetlen(s, len);
     }
+    // 记录新的总空间大小
     sdssetalloc(s, newlen);
     return s;
 }

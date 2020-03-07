@@ -45,18 +45,19 @@ void zlibc_free(void *ptr) {
 #include "config.h"
 #include "zmalloc.h"
 #include "atomicvar.h"
-
+// 定义了malloc_size PREFIX_SIZE为0
 #ifdef HAVE_MALLOC_SIZE
 #define PREFIX_SIZE (0)
 #else
 #if defined(__sun) || defined(__sparc) || defined(__sparc__)
-#define PREFIX_SIZE (sizeof(long long))
+#define PREFIX_SIZE (sizeof(long long))  // PREFIX_SIZE 为sizeof(long long)
 #else
-#define PREFIX_SIZE (sizeof(size_t))
+#define PREFIX_SIZE (sizeof(size_t)) // PREFIX_SIZE为sizeof(size_t)
 #endif
 #endif
 
 /* Explicitly override malloc/free etc when using tcmalloc. */
+// 映射
 #if defined(USE_TCMALLOC)
 #define malloc(size) tc_malloc(size)
 #define calloc(count,size) tc_calloc(count,size)
@@ -70,19 +71,19 @@ void zlibc_free(void *ptr) {
 #define mallocx(size,flags) je_mallocx(size,flags)
 #define dallocx(ptr,flags) je_dallocx(ptr,flags)
 #endif
-
+// 更新已使用内存大小 +__n
 #define update_zmalloc_stat_alloc(__n) do { \
     size_t _n = (__n); \
     if (_n&(sizeof(long)-1)) _n += sizeof(long)-(_n&(sizeof(long)-1)); \
     atomicIncr(used_memory,__n); \
 } while(0)
-
+// 更新已使用内存大小 -__n
 #define update_zmalloc_stat_free(__n) do { \
     size_t _n = (__n); \
     if (_n&(sizeof(long)-1)) _n += sizeof(long)-(_n&(sizeof(long)-1)); \
     atomicDecr(used_memory,__n); \
 } while(0)
-
+// 记录已使用内存大小
 static size_t used_memory = 0;
 pthread_mutex_t used_memory_mutex = PTHREAD_MUTEX_INITIALIZER;
 
@@ -95,14 +96,16 @@ static void zmalloc_default_oom(size_t size) {
 
 static void (*zmalloc_oom_handler)(size_t) = zmalloc_default_oom;
 
+// 开辟内存空间 大小为size
 void *zmalloc(size_t size) {
     void *ptr = malloc(size+PREFIX_SIZE);
 
     if (!ptr) zmalloc_oom_handler(size);
-#ifdef HAVE_MALLOC_SIZE
+#ifdef HAVE_MALLOC_SIZE 
+    // 更新已使用内存的记录
     update_zmalloc_stat_alloc(zmalloc_size(ptr));
     return ptr;
-#else
+#else  // 未定义HAVE_MALLOC_SIZE  则需要记录内存大小
     *((size_t*)ptr) = size;
     update_zmalloc_stat_alloc(size+PREFIX_SIZE);
     return (char*)ptr+PREFIX_SIZE;
@@ -140,7 +143,8 @@ void *zcalloc(size_t size) {
     return (char*)ptr+PREFIX_SIZE;
 #endif
 }
-
+// 内存扩容
+// ptr指向的内存空间，需要扩容到size
 void *zrealloc(void *ptr, size_t size) {
 #ifndef HAVE_MALLOC_SIZE
     void *realptr;
@@ -153,23 +157,27 @@ void *zrealloc(void *ptr, size_t size) {
         return NULL;
     }
     if (ptr == NULL) return zmalloc(size);
-#ifdef HAVE_MALLOC_SIZE
-    oldsize = zmalloc_size(ptr);
-    newptr = realloc(ptr,size);
+#ifdef HAVE_MALLOC_SIZE // 定义了HAVE_MALLOC_SIZE  存在标准的malloc_size方法
+    oldsize = zmalloc_size(ptr);  // 通过malloc_size方法获取ptr内存块的大小
+    newptr = realloc(ptr,size);  // 内存扩容 不会影响ptr原来的数据 但是newptr和ptr可能会指向不同地址
     if (!newptr) zmalloc_oom_handler(size);
 
     update_zmalloc_stat_free(oldsize);
     update_zmalloc_stat_alloc(zmalloc_size(newptr));
     return newptr;
-#else
-    realptr = (char*)ptr-PREFIX_SIZE;
-    oldsize = *((size_t*)realptr);
-    newptr = realloc(realptr,size+PREFIX_SIZE);
+#else  // 未定义HAVE_MALLOC_SIZE     
+    // |-------------|----------------|
+    // realptr      ptr
+    realptr = (char*)ptr-PREFIX_SIZE;  // ptr指针后移PREFIX_SIZE
+    oldsize = *((size_t*)realptr); // 取值
+    newptr = realloc(realptr,size+PREFIX_SIZE);  // 内存扩容 
     if (!newptr) zmalloc_oom_handler(size);
 
-    *((size_t*)newptr) = size;
+    *((size_t*)newptr) = size; // 将size存入((size_t*)newptr)[0]  记录内存大小
+    // 更新已使用内存的记录
     update_zmalloc_stat_free(oldsize+PREFIX_SIZE);
     update_zmalloc_stat_alloc(size+PREFIX_SIZE);
+    // 返回ssptr
     return (char*)newptr+PREFIX_SIZE;
 #endif
 }
