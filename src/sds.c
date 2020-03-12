@@ -1197,6 +1197,7 @@ sds sdsmapchars(sds s, const char *from, const char *to, size_t setlen) {
 
 /* Join an array of C strings using the specified separator (also a C string).
  * Returns the result as an sds string. */
+// 多个C字符串中依次插入sep字符串
 sds sdsjoin(char **argv, int argc, char *sep) {
     sds join = sdsempty();
     int j;
@@ -1209,6 +1210,7 @@ sds sdsjoin(char **argv, int argc, char *sep) {
 }
 
 /* Like sdsjoin, but joins an array of SDS strings. */
+// 多个sds字符串依次插入sep字符串
 sds sdsjoinsds(sds *argv, int argc, const char *sep, size_t seplen) {
     sds join = sdsempty();
     int j;
