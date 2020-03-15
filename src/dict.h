@@ -43,6 +43,27 @@
 
 /* Unused arguments generate annoying warnings... */
 #define DICT_NOTUSED(V) ((void) V)
+/**
+ * 
+ * 
+ * 
+ * 
+ * 
+ *  +----- dict -----+        +--------- dictht --------+             +-- dictEntry --+     +-- dictEntry --+
+ *  | dictType *type |        | size                    |   +------>  |  key          |     |  key          |
+ *  | dictht ht[0]   | -----> | sizemask                |   |         |  v            |     |  v            |
+ *  | dictht ht[1]   | --+    | used                    |   |         |  next         | --> |  next         | --> NULL
+ *  | rehashidx      |   |    | dictEntry *table[0]     | --+         +---------------+     +---------------+
+ *  | iterators      |   |    | dictEntry *table[1]     | --+         +-- dictEntry --+
+ *  +----------------+   |    | ...                     |   +------>  |  key          |
+ *                       |    | dictEntry *table[size-1]| --> NULL    |  key          |
+ *                       |    +-------------------------+             |  next         | -->NULL
+ *                       |
+ *                       +--> +--------- dictht --------+             +---------------+ 
+ *                            |            同上          |
+ *                            +-------------------------+    
+ * 
+ * */
 
 typedef struct dictEntry {
     void *key;
