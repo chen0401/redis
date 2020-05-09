@@ -864,6 +864,7 @@ struct sharedObjectsStruct {
 };
 
 /* ZSETs use a specialized version of Skiplists */
+// 跳跃表节点
 typedef struct zskiplistNode {
     sds ele;
     double score;

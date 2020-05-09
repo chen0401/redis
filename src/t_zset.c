@@ -68,6 +68,7 @@ int zslLexValueLteMax(sds value, zlexrangespec *spec);
 
 /* Create a skiplist node with the specified number of levels.
  * The SDS string 'ele' is referenced by the node after the call. */
+// 创建跳跃表节点
 zskiplistNode *zslCreateNode(int level, double score, sds ele) {
     zskiplistNode *zn =
         zmalloc(sizeof(*zn)+level*sizeof(struct zskiplistLevel));
@@ -77,6 +78,7 @@ zskiplistNode *zslCreateNode(int level, double score, sds ele) {
 }
 
 /* Create a new skiplist. */
+// 创建跳跃表
 zskiplist *zslCreate(void) {
     int j;
     zskiplist *zsl;
@@ -84,6 +86,7 @@ zskiplist *zslCreate(void) {
     zsl = zmalloc(sizeof(*zsl));
     zsl->level = 1;
     zsl->length = 0;
+    // 创建头节点
     zsl->header = zslCreateNode(ZSKIPLIST_MAXLEVEL,0,NULL);
     for (j = 0; j < ZSKIPLIST_MAXLEVEL; j++) {
         zsl->header->level[j].forward = NULL;
@@ -136,9 +139,12 @@ zskiplistNode *zslInsert(zskiplist *zsl, double score, sds ele) {
 
     serverAssert(!isnan(score));
     x = zsl->header;
+    // 从跳跃表的最高层开始
+    // 寻找新节点的插入位置
     for (i = zsl->level-1; i >= 0; i--) {
         /* store rank that is crossed to reach the insert position */
         rank[i] = i == (zsl->level-1) ? 0 : rank[i+1];
+        // 在第i层中，持续向前查找新节点的位置
         while (x->level[i].forward &&
                 (x->level[i].forward->score < score ||
                     (x->level[i].forward->score == score &&
@@ -147,22 +153,29 @@ zskiplistNode *zslInsert(zskiplist *zsl, double score, sds ele) {
             rank[i] += x->level[i].span;
             x = x->level[i].forward;
         }
+        // 记录下当前层中需要更新的节点 可能需要更新span、forward指向
         update[i] = x;
     }
     /* we assume the element is not already inside, since we allow duplicated
      * scores, reinserting the same element should never happen since the
      * caller of zslInsert() should test in the hash table if the element is
      * already inside or not. */
+    // 随机level
     level = zslRandomLevel();
+    // 如果level大于了当前跳跃表的最大level
     if (level > zsl->level) {
         for (i = zsl->level; i < level; i++) {
+            // 排序都为0  因为这些节点都是头节点
             rank[i] = 0;
+            // 指向头节点
             update[i] = zsl->header;
             update[i]->level[i].span = zsl->length;
         }
         zsl->level = level;
     }
+    // 创建节点
     x = zslCreateNode(level,score,ele);
+    // 更新每一个节点中需要更新的层
     for (i = 0; i < level; i++) {
         x->level[i].forward = update[i]->level[i].forward;
         update[i]->level[i].forward = x;
@@ -219,6 +232,7 @@ int zslDelete(zskiplist *zsl, double score, sds ele, zskiplistNode **node) {
     zskiplistNode *update[ZSKIPLIST_MAXLEVEL], *x;
     int i;
 
+    // 查找待删除的节点
     x = zsl->header;
     for (i = zsl->level-1; i >= 0; i--) {
         while (x->level[i].forward &&
@@ -233,6 +247,7 @@ int zslDelete(zskiplist *zsl, double score, sds ele, zskiplistNode **node) {
     /* We may have multiple elements with the same score, what we need
      * is to find the element with both the right score and object. */
     x = x->level[0].forward;
+    // 查找到了需要删除的节点: score相同 && ele相同
     if (x && score == x->score && sdscmp(x->ele,ele) == 0) {
         zslDeleteNode(zsl, x, update);
         if (!node)
