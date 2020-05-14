@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/cc -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/hiredis-test.dir/test.c.o  -o hiredis-test  -Wl,-rpath,/Users/liufan/Desktop/projects/redis/deps/hiredis libhiredis.0.14.dylib 

@@ -1,0 +1,96 @@
+# The set of languages for which implicit dependencies are needed:
+set(CMAKE_DEPENDS_LANGUAGES
+  "C"
+  )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_C
+  "/Users/liufan/Desktop/projects/redis/src/adlist.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/adlist.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/ae.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/ae.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/ae_kqueue.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/ae_kqueue.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/anet.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/anet.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/aof.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/aof.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/bio.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/bio.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/bitops.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/bitops.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/blocked.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/blocked.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/childinfo.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/childinfo.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/cluster.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/cluster.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/config.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/config.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/crc16.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/crc16.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/crc64.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/crc64.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/db.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/db.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/debug.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/debug.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/defrag.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/defrag.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/dict.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/dict.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/endianconv.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/endianconv.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/evict.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/evict.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/expire.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/expire.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/geo.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/geo.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/geohash.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/geohash.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/geohash_helper.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/geohash_helper.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/hyperloglog.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/hyperloglog.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/intset.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/intset.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/latency.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/latency.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/lazyfree.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/lazyfree.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/listpack.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/listpack.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/localtime.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/localtime.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/lolwut.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/lolwut.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/lolwut5.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/lolwut5.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/lzf_c.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/lzf_c.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/lzf_d.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/lzf_d.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/memtest.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/memtest.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/module.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/module.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/multi.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/multi.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/networking.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/networking.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/notify.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/notify.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/object.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/object.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/pqsort.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/pqsort.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/pubsub.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/pubsub.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/quicklist.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/quicklist.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/rand.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/rand.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/rax.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/rax.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/rdb.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/rdb.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/redis-check-aof.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/redis-check-aof.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/redis-check-rdb.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/redis-check-rdb.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/release.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/release.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/replication.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/replication.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/rio.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/rio.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/scripting.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/scripting.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/sds.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/sds.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/sentinel.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/sentinel.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/server.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/server.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/setproctitle.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/setproctitle.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/sha1.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/sha1.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/siphash.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/siphash.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/slowlog.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/slowlog.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/sort.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/sort.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/sparkline.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/sparkline.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/syncio.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/syncio.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/t_hash.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/t_hash.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/t_list.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/t_list.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/t_set.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/t_set.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/t_stream.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/t_stream.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/t_string.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/t_string.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/t_zset.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/t_zset.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/util.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/util.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/ziplist.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/ziplist.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/zipmap.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/zipmap.c.o"
+  "/Users/liufan/Desktop/projects/redis/src/zmalloc.c" "/Users/liufan/Desktop/projects/redis/CMakeFiles/redis-server.dir/src/zmalloc.c.o"
+  )
+set(CMAKE_C_COMPILER_ID "AppleClang")
+
+# The include file search paths:
+set(CMAKE_C_TARGET_INCLUDE_PATH
+  "deps/linenoise"
+  "deps/hiredis"
+  "deps/lua/src"
+  )
+
+# Targets to which this target links.
+set(CMAKE_TARGET_LINKED_INFO_FILES
+  "/Users/liufan/Desktop/projects/redis/deps/lua/CMakeFiles/lua.dir/DependInfo.cmake"
+  "/Users/liufan/Desktop/projects/redis/deps/linenoise/CMakeFiles/linenoise.dir/DependInfo.cmake"
+  "/Users/liufan/Desktop/projects/redis/deps/hiredis/CMakeFiles/hiredis.dir/DependInfo.cmake"
+  )
+
+# Fortran module output directory.
+set(CMAKE_Fortran_TARGET_MODULE_DIR "")

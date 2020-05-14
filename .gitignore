@@ -1,3 +1,5 @@
+.idea/
+.history/
 .*.swp
 *.o
 *.log
